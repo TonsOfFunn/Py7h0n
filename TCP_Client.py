@@ -1,13 +1,10 @@
-#import socket
-from socket import *
+import socket
 
 TARGET_HOST = 'www.google.com'
 TARGET_PORT = 80
 
 # create client socket object from socket class
-#client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client = socket(AF_INET, SOCK_STREAM)
-
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # connect the client socket object to target host & port
 client.connect((TARGET_HOST, TARGET_PORT))
