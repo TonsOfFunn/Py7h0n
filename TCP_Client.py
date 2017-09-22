@@ -1,6 +1,6 @@
 import socket
 
-# vars
+# constants
 TARGET_HOST = 'www.google.com'
 TARGET_PORT = 80
 
