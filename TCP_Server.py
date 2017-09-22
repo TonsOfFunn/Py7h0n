@@ -2,7 +2,7 @@ import socket
 import threading
 
 # vars
-BIND_IP = "0.0.0.0"
+BIND_IP = "127.0.0.1"
 BIND_PORT = 9999
 
 # create server socket object from socket class
@@ -19,23 +19,22 @@ print("[*] Listening on %s:%d" % (BIND_IP, BIND_PORT))
 
 # this is our client-handling thread
 def handle_client(client_socket):
+    # print out what the client sends
+    request = client_socket.recv(1024)
    
-   # print out what the client sends
-   request = client_socket.recv(1024)
+    print("[*] Received: %s" % request)
    
-   print("[*] Received: %s" % request)
+    # send back a packet
+    client_socket.send("ACK!")
    
-   # send back a packet
-   client_socket.send("ACK!")
-   
-   # close client_socket object connection
-   client_socket.close()
+    # close client_socket object connection
+    client_socket.close()
 
 # main()
-While True:
-  client, addr = server.accept()
-  print("[*] Accepted connection from: %s:%d" % (addr[0], addr[1]))
+while True:
+    client, addr = server.accept()
+    print("[*] Accepted connection from: %s:%d" % (addr[0], addr[1]))
   
-  # spin up our client thread to handle incoming data
-  client_handler = threading.Thread(target=handle_client, args=(client,))
-  client_handler.start()
+    # spin up our client thread to handle incoming data
+    client_handler = threading.Thread(target=handle_client, args=(client,))
+    client_handler.start()
