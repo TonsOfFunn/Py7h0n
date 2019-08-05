@@ -7,7 +7,7 @@
 | Notes:
     MAC address 1st octet must be even number
 | Version: 
-    2
+    3
 | Variables:
     interface
     new_mac
@@ -16,9 +16,14 @@
 import subprocess
 import argparse
 
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--interface", dest="interface", help="Interface to change its MAC address")
+    parser.add_argument("-m", "--mac", dest="new_mac", help="New MAC address")
+    return parser.parse_args()    
+
 def change_mac(interface, new_mac):
-    print("[+] Changing MAC address for", interface, "to", new_mac)
-    
+    print("[+] Changing MAC address for", interface, "to", new_mac) 
     # Safe practice using lists to store bash commands
     # Can hijack program through code injection " wlan0;ls; "
     subprocess.call(["ifconfig", interface, "down"])
@@ -28,13 +33,7 @@ def change_mac(interface, new_mac):
 
 #------------[ MAIN ]-------------------
 
-parser = argparse.ArgumentParser()
-
-parser.add_argument("-i", "--interface", dest="interface", help="Interface to change its MAC address")
-parser.add_argument("-m", "--mac", dest="new_mac", help="New MAC address")
-
-args = parser.parse_args()
-
+args = get_arguments()
 change_mac(args.interface, args.new_mac)
 
 
