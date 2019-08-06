@@ -38,6 +38,7 @@ def change_mac(interface, new_mac):
     Change mac address of specified interface to new mac address.
     '''    
     print("[+] Changing MAC address for", interface, "to", new_mac) 
+    
     # Safe practice using lists to store bash commands
     # Can hijack program through code injection " wlan0;ls; "
     subprocess.call(["ifconfig", interface, "down"])
@@ -45,15 +46,14 @@ def change_mac(interface, new_mac):
     subprocess.call(["ifconfig", interface, "up"])    
 
 
-
 def get_current_mac(interface):
     '''
     Get current MAC address from output of command ifconfig <interface>
     '''
     ifconfig_result = subprocess.check_output(["ifconfig", interface])
-
+    
     # use regex to search for MAC address in output of ifconfig command
-    mac_search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", str(ifconfig_result))
+    mac_search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", str(ifconfig_result))   
     
     # check if mac was found in search result
     if mac_search_result:
