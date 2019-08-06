@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 | Description:
@@ -7,7 +7,7 @@
 | Notes:
     MAC address 1st octet must be even number
 | Version: 
-    4
+    5
 | Variables:
     interface
     new_mac
