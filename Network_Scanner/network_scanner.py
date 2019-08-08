@@ -20,9 +20,8 @@
 import scapy.all as scapy
 
 def scan(ip):
-    arp_request = scapy.ARP()
+    arp_request = scapy.ARP(pdst=ip)
     print(arp_request.summary())
-    scapy.ls(scapy.ARP())
 
 # returns mac address of scanned ip range    
 scan("10.0.2.0/24")
