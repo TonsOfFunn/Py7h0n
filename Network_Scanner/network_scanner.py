@@ -2,19 +2,29 @@
 
 '''
 | Description:
-    Network devices scanner and enumerator
+    Network devices scanner and enumerator to discover clients
+    on a network.
 | Notes:
     Cannot import scapy using python3
+| Steps:
+    1. Create arp request directed to broadcast MAC asking for IP.
+    2. Send packet and receive respones.
+    3. Parse the response.
+    4. Print result.
 | Version: 
-    2
+    3
 | Variables:
-    
+    ip
 '''
 
 import scapy.all as scapy
 
 def scan(ip):
-    scapy.arping(ip)
+    arp_request = scapy.ARP()
+    print(arp_request.summary())
+    scapy.ls(scapy.ARP())
 
-# returns MAC address of scanned IP range    
+# returns mac address of scanned ip range    
 scan("10.0.2.0/24")
+
+
