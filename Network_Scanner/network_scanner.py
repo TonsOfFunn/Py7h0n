@@ -5,7 +5,7 @@
     Network devices scanner and enumerator to discover clients
     on a network.
 | Version:
-    5
+    6
 | Notes:
     Cannot import scapy using python3
 | Algorithm:
@@ -34,12 +34,12 @@ def scan(ip):
     # srp send/receive/packets with custom mac address
     # srp by default returns 2 list objects, were returning
     # first element of the list by appending  [0]
-    answered_list = scapy.srp(arp_request_broadcast, timeout=1)[0]
+    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
 
+    print('_'*60 + '\nIP\t\t\tMAC Address\n' + '-'*60)
     for element in answered_list:
-        print(element[1].psrc)
-        print(element[1].hwsrc)
-        print('-' * 20)
+        print(element[1].psrc + '\t\t' + element[1].hwsrc)
+        #print('-' * 60)
 
 #--------------[ MAIN ]--------------
 
