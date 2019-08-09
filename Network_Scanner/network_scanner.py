@@ -5,7 +5,7 @@
     Network devices scanner and enumerator to discover clients
     on a network.
 | Version:
-    6
+    7
 | Notes:
     Cannot import scapy using python3
 | Algorithm:
@@ -21,6 +21,8 @@
     broadcast
     arp_request_broadcast
     answered_list
+    clients_list
+    clients_dict
 """
 
 import scapy.all as scapy
@@ -40,18 +42,20 @@ def scan(ip):
     # first element of the list by appending  [0]
     answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
     
-
     clients_list = []
-    print("_"*60 + "\nIP\t\t\tMAC Address\n" + "-"*60)
     for element in answered_list:
         client_dict = {"ip": element[1].psrc, "mac": element[1].hwsrc}
         clients_list.append(client_dict)
-        print(element[1].psrc + "\t\t" + element[1].hwsrc)
-    print(clients_list)
+    return clients_list
+
+def print_results(results_list):
+    print("_"*60 + "\nIP\t\t\tMAC Address\n" + "-"*60)
+    for client in results_list:
+        print(client["ip"] + "\t\t" + client["mac"])
 
 #--------------[ MAIN ]--------------
 
-# returns mac address of scanned ip range    
-scan("10.0.2.0/24")
-
+# returns and prints mac address of scanned ip range    
+scan_result = scan("10.0.2.0/24")
+print_results(scan_result)
 
