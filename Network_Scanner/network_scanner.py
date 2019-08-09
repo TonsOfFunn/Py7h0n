@@ -5,7 +5,7 @@
     Network devices scanner and enumerator to discover clients
     on a network.
 | Version:
-    8
+    9
 | Notes:
     Cannot import scapy using python3
 | Algorithm:
@@ -34,7 +34,7 @@ def get_arguments():
     Returns parser object's stored objects passed from user input.
     '''
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t", "--target", dest="ip", help="IP to scan")
+    parser.add_argument("-t", "--target", dest="ip", help="IP address range to scan: 192.168.56.1/24")
     args = parser.parse_args()    
     if not args.ip:
         parser.error("[-] Please specify an IP address to scan, use --help for more info.")
