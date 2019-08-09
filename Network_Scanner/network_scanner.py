@@ -24,11 +24,13 @@ import scapy.all as scapy
 def scan(ip):
     # create ARP packet
     arp_request = scapy.ARP(pdst=ip)
+    arp_request.show()
     # create broadcast frame
     broadcast = scapy.Ether(dst='ff:ff:ff:ff:ff:ff')
+    broadcast.show()
     # encapsulate ARP packet in broadcast frame
     arp_request_broadcast = broadcast/arp_request
-    print(arp_request_broadcast.summary())
+    arp_request_broadcast.show()
 
 #--------------[ MAIN ]--------------
 
