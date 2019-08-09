@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 
-'''
+"""
 | Description:
     Network devices scanner and enumerator to discover clients
     on a network.
@@ -17,7 +17,11 @@
     4. Print result.
 | Variables:
     ip
-'''
+    arp_request
+    broadcast
+    arp_request_broadcast
+    answered_list
+"""
 
 import scapy.all as scapy
 
@@ -26,7 +30,7 @@ def scan(ip):
     arp_request = scapy.ARP(pdst=ip)
 
     # create broadcast frame
-    broadcast = scapy.Ether(dst='ff:ff:ff:ff:ff:ff')
+    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
 
     # encapsulate ARP packet in broadcast frame
     arp_request_broadcast = broadcast/arp_request
@@ -35,11 +39,15 @@ def scan(ip):
     # srp by default returns 2 list objects, were returning
     # first element of the list by appending  [0]
     answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
+    
 
-    print('_'*60 + '\nIP\t\t\tMAC Address\n' + '-'*60)
+    clients_list = []
+    print("_"*60 + "\nIP\t\t\tMAC Address\n" + "-"*60)
     for element in answered_list:
-        print(element[1].psrc + '\t\t' + element[1].hwsrc)
-        #print('-' * 60)
+        client_dict = {"ip": element[1].psrc, "mac": element[1].hwsrc}
+        clients_list.append(client_dict)
+        print(element[1].psrc + "\t\t" + element[1].hwsrc)
+    print(clients_list)
 
 #--------------[ MAIN ]--------------
 
