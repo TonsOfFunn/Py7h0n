@@ -35,7 +35,11 @@ def scan(ip):
     # srp by default returns 2 list objects, were returning
     # first element of the list by appending  [0]
     answered_list = scapy.srp(arp_request_broadcast, timeout=1)[0]
-    print(answered_list.summary())
+
+    for element in answered_list:
+        print(element[1].psrc)
+        print(element[1].hwsrc)
+        print('-' * 20)
 
 #--------------[ MAIN ]--------------
 
