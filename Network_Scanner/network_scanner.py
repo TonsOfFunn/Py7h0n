@@ -72,8 +72,7 @@ def print_results(results_list):
     Displays any scan results found.
     '''
     width = 60
-    header = "_" * width
-    footer = "-" * width
+    header, footer = "_" * width, "-" * width
     print(header + "\nIP\t\t\tMAC Address\n" + footer)
     for client in results_list:
         print(client["ip"] + "\t\t" + client["mac"])
