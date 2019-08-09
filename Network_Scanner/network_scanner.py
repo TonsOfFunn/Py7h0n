@@ -5,7 +5,7 @@
     Network devices scanner and enumerator to discover clients
     on a network.
 | Version:
-    3
+    4
 | Notes:
     Cannot import scapy using python3
 | Algorithm:
@@ -26,9 +26,11 @@ def scan(ip):
     arp_request = scapy.ARP(pdst=ip)
     # create broadcast frame
     broadcast = scapy.Ether(dst='ff:ff:ff:ff:ff:ff')
-    # append ARP packet to broadcast frame
+    # encapsulate ARP packet in broadcast frame
     arp_request_broadcast = broadcast/arp_request
     print(arp_request_broadcast.summary())
+
+#--------------[ MAIN ]--------------
 
 # returns mac address of scanned ip range    
 scan("10.0.2.0/24")
