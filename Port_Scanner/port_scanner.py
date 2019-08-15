@@ -37,7 +37,7 @@ guessed_os = "There is a %s percent chance that the host is running %s" %(nm_sca
 # write scan results to file
 with open("%s.txt" % sys.argv[1], 'w') as f:
     f.write(host_up + port_open + scan_method + guessed_os)
-    f.write("\nReport generated " + time.strftime("%Y-%m-%d_%H:%M:%S GMT", time.gmtime()))
+    f.write("\nReport generated " + time.strftime("%Y-%m-%d_%H:%M:%S GMT\n", time.gmtime()))
     f.close()
 
 print("\nFinished...")
