@@ -8,10 +8,14 @@
 | Notes:
 
 | Version: 
-    2
+    3
 | Variables:
     nm_scan
     nm_scanner
+    host_up
+    port_open
+    method_scan
+    guessed_os
 '''
 
 import nmap
